@@ -11,7 +11,7 @@ class Matrix{
 	public:
 		Matrix(unsigned, unsigned, T init=T());
 		Matrix(){}
-		~Matrix();
+		virtual ~Matrix();
 		virtual T& at(unsigned, unsigned) const;
 		virtual T get(unsigned, unsigned) const;
 		virtual Matrix<T> doOp(Matrix<T>&, std::function<T(T,T)>) const;

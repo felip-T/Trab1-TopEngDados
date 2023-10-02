@@ -120,6 +120,33 @@ DiagonalMatrix<T> DiagonalMatrix<T>::operator-(DiagonalMatrix<T>& m) const
 }
 
 template <class T>
+class TriangularDownMatrix : public SquareMatrix<T>{
+	public:
+		TriangularDownMatrix(unsigned, T init=T());
+		T det() const;
+	private:
+		using Matrix<T>::data;
+		using Matrix<T>::rows;
+		using Matrix<T>::cols;
+};
+
+template <class T>
+TriangularDownMatrix<T>::TriangularDownMatrix(unsigned size, T init){
+	data = new TriMatrix(size, init);
+	rows = size;
+	cols = size;
+}
+
+template <class T>
+T TriangularDownMatrix<T>::det() const{
+	T result = 1;
+	for(unsigned i = 0; i < rows; i++){
+		result *= data->at(i, i);
+	}
+	return result;
+}
+
+template <class T>
 class TriangularUpMatrix : public SquareMatrix<T>{
 	public:
 		TriangularUpMatrix(unsigned, T init=T());
@@ -132,7 +159,7 @@ class TriangularUpMatrix : public SquareMatrix<T>{
 
 template <class T>
 TriangularUpMatrix<T>::TriangularUpMatrix(unsigned size, T init){
-	data = new TriMatrix(size, init);
+	data = new TriUpMatrix(size, init);
 	rows = size;
 	cols = size;
 }
@@ -145,5 +172,4 @@ T TriangularUpMatrix<T>::det() const{
 	}
 	return result;
 }
-
 #endif

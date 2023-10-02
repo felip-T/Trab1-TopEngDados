@@ -98,11 +98,11 @@ T OneDMatrix<T>::get(unsigned row, unsigned col){
 template <class T>
 class TriMatrix : public MatrixDataStruc<T>{
 	public:
-		TriMatrix(unsigned, T init=T(), T _def=T());
+		TriMatrix(unsigned, T _init=T(), T _def=T());
 		~TriMatrix() override;
-		T& at(unsigned, unsigned) override;
-		T get(unsigned, unsigned) override;
-	private:
+		virtual T& at(unsigned, unsigned) override;
+		virtual T get(unsigned, unsigned) override;
+	protected:
 		unsigned size;
 		T** data;
 		T def;
@@ -143,5 +143,13 @@ T TriMatrix<T>::get(unsigned row, unsigned col){
 	}
 	return def;
 }
+
+template <class T>
+class TriUpMatrix : public TriMatrix<T>{
+	public:
+		TriUpMatrix(unsigned _size, T _init=T(), T _def=T()) : TriMatrix<T>(_size, _init, _def) {}
+		T& at(unsigned row, unsigned col) { return TriMatrix<T>::at((TriMatrix<T>::size-1)-row, (TriMatrix<T>::size-1)-col); }
+		T get(unsigned row, unsigned col) { return TriMatrix<T>::get((TriMatrix<T>::size-1)-row, (TriMatrix<T>::size-1)-col); }
+};
 
 #endif
